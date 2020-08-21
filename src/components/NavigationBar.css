@@ -1,0 +1,9 @@
+.NavContent1 {
+    display: flex;
+    flex-direction: row;
+    margin-right: 10vw;
+}
+
+.NavItem {
+    margin-right: 1vw;
+}

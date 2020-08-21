@@ -13,6 +13,7 @@ import {
     DropdownItem,
     NavbarText
 } from 'reactstrap';
+import './NavigationBar.css';
 //import {Link} from 'react-router-dom';
 
 const NavigationBar = (props) => {
@@ -26,22 +27,24 @@ const NavigationBar = (props) => {
           <NavbarBrand href="/">StarAtlas</NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
-            <Nav className="mr-auto" navbar>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>創業者</DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>Option 1</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>投資者</DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>Option 1</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-              <NavItem>
-                <NavLink href="/About">關於星圖</NavLink>
-              </NavItem>
+            <Nav className="ml-auto" navbar>
+              <div className='NavContent1'>
+                <UncontrolledDropdown nav inNavbar className='NavItem'>
+                  <DropdownToggle nav caret>創業者</DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem>Option 1</DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown nav inNavbar className='NavItem'>
+                  <DropdownToggle nav caret>投資者</DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem>Option 1</DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <NavItem className='NavItem'>
+                  <NavLink href="/About">關於星圖</NavLink>
+                </NavItem>
+              </div>
               <NavItem>
                 <NavLink href="/Login">登入</NavLink>
               </NavItem>

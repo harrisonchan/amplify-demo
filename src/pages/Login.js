@@ -29,9 +29,9 @@ class Login extends React.Component{
                 </InputGroup>
                 <NavLink href='./PasswordRetrieval'>忘記密碼？</NavLink>
                 <Button>登入</Button>
-                <div>
+                <div style={{display:'flex', justifyContent:'center', marginTop:'1vh'}}>
                     <text>還沒有會員帳號嗎？</text>
-                    <NavLink href='./RoleSelection'><Button>馬上註冊</Button></NavLink>
+                    <NavLink href='./RoleSelection' style={{padding:0}}>馬上註冊</NavLink>
                 </div>
             </div>
         )
