@@ -1,0 +1,10 @@
+.RoleSelection {
+    display: flex;
+    flex-direction: column;
+    align-items: column;
+}
+
+.RoleSelection .h1 {
+    font-size: 50;
+}
+
