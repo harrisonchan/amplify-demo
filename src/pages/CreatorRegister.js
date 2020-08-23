@@ -31,7 +31,8 @@ class CreatorRegister extends React.Component{
             monthInput: 0,
             dayInput: 0,
             genderDropdownOpen: false,
-            genderInput: '選擇性別',
+            genderInput: '',
+            validGender: false,
         }
     }
 
@@ -73,7 +74,7 @@ class CreatorRegister extends React.Component{
         if(
             dateArr.length == 1 ||
             Date.parse(this.state.currDate) < Date.parse(date) ||
-            Date.parse(date) < Date.parse('1900-01-01')) {
+            Date.parse(date) < Date.parse('1930-01-01')) {
             this.setState({dateValid: false})
         } else {
             this.setState({yearInput: dateArr[0], monthInput: dateArr[1], dayInput: dateArr[2], dateValid: true})
@@ -140,26 +141,26 @@ class CreatorRegister extends React.Component{
                         style={{color:'#FF9191'}}>
                         日期錯誤</text>  }   
                     <InputGroup>
-                        <Input className='input1' type='date' min='1900-01-01' max={this.state.currDate}
+                        <Input className='input1' type='date' min='1930-01-01' max={this.state.currDate}
                             onChange={(val) => this.handleDate(val.target.value)}/>
                             <InputGroupAddon addonType='append'></InputGroupAddon>
                     </InputGroup>
                     <text className='header2 alignFlexStart'>性別</text>
                     <InputGroup>
-                        <Dropdown 
-                            style={{width:'100%'}}
-                            isOpen={this.state.genderDropdownOpen} toggle={
-                                () => this.setState({genderDropdownOpen: !this.state.genderDropdownOpen})
-                            }>
-                            <DropdownToggle caret>{this.state.genderInput = '' ? 'select gender' : this.state.genderInput}</DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem onClick={() => this.setState({genderInput: '男性'})}>男性</DropdownItem>
-                                <DropdownItem onClick={() => this.setState({genderInput: '女性'})}>女性</DropdownItem>
-                                <DropdownItem onClick={() => this.setState({genderInput: '其他'})}>其他</DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
+                        <Input className='input1' type='select' onChange={(val) => this.setState({genderInput: val.target.value}, () => {
+                            if(this.state.genderInput == '') {
+                                this.setState({validGender:false})
+                            } else {
+                                this.setState({validGender:true})
+                            }
+                        })}> 
+                                <option value=''>選擇性別</option>
+                                <option value='男性'>男性</option>
+                                <option value='女性'>女性</option>
+                                <option value='其他'>其他</option>
+                        </Input>
                     </InputGroup>
-                    <Button onClick={() => this.testStuff()}>註冊會員</Button>
+                    <Button style={{marginTop:'4vh'}} onClick={() => this.testStuff()}>註冊會員</Button>
                     <div style={{display:'flex', justifyContent:'center', marginTop:'1vh', alignSelf:'flex-start'}}>
                         <text>已經有帳號嗎？</text>
                         <NavLink href='./Login' style={{padding:0}}>馬上登入</NavLink>
