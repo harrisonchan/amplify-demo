@@ -16,10 +16,6 @@ import {
 import './CreatorRegister.css';
 import '../StyleSheet.css';
 
-const day = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
-const month = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
-const year = []
-
 class CreatorRegister extends React.Component{
 
     constructor(props) {
@@ -29,26 +25,33 @@ class CreatorRegister extends React.Component{
             pwCheckInput: '',
             pwValid: false,
             pwMatch: true,
+            currDate: '',
             dateValid: true,
             yearInput: 0,
             monthInput: 0,
             dayInput: 0,
-            // dayDropdownOpen: false,
-            // dayInput: '日',
-            // monthDropdownOpen: false,
-            // monthInput:'月',
-            // yearDropdownOpen: false,
-            // yearInput:'年',
             genderDropdownOpen: false,
             genderInput: '選擇性別',
         }
     }
 
     componentDidMount() {
-        let currYear = new Date().getFullYear().valueOf()
-        for(var i = 0; i <= 100 ; i++) {
-            year.push(currYear - i)
+        this.setState({currDate: this.parseDate()})
+    }
+
+    parseDate() {
+        let date = new Date()
+        let year = date.getFullYear().toString()
+        let month = (date.getMonth() + 1).toString()
+        let day = date.getDate().toString()
+        if (/^(?!0)[\d]{1}$/.test(month)) {
+            month = '0' + month
         }
+        if (/^(?!0)[\d]{1}$/.test(day)) {
+            day = '0' + day
+        }
+        date = year + '-' + month + '-' + day
+        return date
     }
 
     checkPwValid() {
@@ -67,11 +70,24 @@ class CreatorRegister extends React.Component{
 
     handleDate(date) {
         let dateArr = date.split('-')
-        if(dateArr.length == 1) {
-            this.setState({dateValid: false})
+        if(
+            dateArr.length == 1 ||
+            Date.parse(this.state.currDate) < Date.parse(date)) {
+            this.setState({dateValid: false}, console.log("suck a dick"))
         } else {
-            this.setState({yearInput: dateArr[0], monthInput: dateArr[1], dayInput: dateArr[2]})
+            this.setState({yearInput: dateArr[0], monthInput: dateArr[1], dayInput: dateArr[2], dateValid: true})
         }
+    }
+
+    checkEmail(email) {
+
+    }
+
+    testStuff() {
+        let d1 = new Date(1, 8, 1)
+        let d2 = new Date().getDate()
+        let ddd = d1.getMonth()
+        console.log(d2)
     }
 
     render() {
@@ -123,23 +139,26 @@ class CreatorRegister extends React.Component{
                         style={{color:'#FF9191'}}>
                         日期錯誤</text>  }   
                     <InputGroup>
-                        <Input className='input1' type='date'
+                        <Input className='input1' type='date' min='1900-01-01' max={this.state.currDate}
                             onChange={(val) => this.handleDate(val.target.value)}/>
                             <InputGroupAddon addonType='append'></InputGroupAddon>
                     </InputGroup>
                     <text className='header2 alignFlexStart'>性別</text>
-                    <Dropdown 
-                        isOpen={this.state.genderDropdownOpen} toggle={
-                            () => this.setState({genderDropdownOpen: !this.state.genderDropdownOpen})
-                        }>
-                        <DropdownToggle caret>{this.state.genderInput = '' ? 'select gender' : this.state.genderInput}</DropdownToggle>
-                        <DropdownMenu>
-                            <DropdownItem onClick={() => this.setState({genderInput: '男性'})}>男性</DropdownItem>
-                            <DropdownItem onClick={() => this.setState({genderInput: '女性'})}>女性</DropdownItem>
-                            <DropdownItem onClick={() => this.setState({genderInput: '其他'})}>其他</DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
-                    <Button>註冊會員</Button>
+                    <InputGroup>
+                        <Dropdown 
+                            style={{width:'100%'}}
+                            isOpen={this.state.genderDropdownOpen} toggle={
+                                () => this.setState({genderDropdownOpen: !this.state.genderDropdownOpen})
+                            }>
+                            <DropdownToggle caret>{this.state.genderInput = '' ? 'select gender' : this.state.genderInput}</DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem onClick={() => this.setState({genderInput: '男性'})}>男性</DropdownItem>
+                                <DropdownItem onClick={() => this.setState({genderInput: '女性'})}>女性</DropdownItem>
+                                <DropdownItem onClick={() => this.setState({genderInput: '其他'})}>其他</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                    </InputGroup>
+                    <Button onClick={() => this.testStuff()}>註冊會員</Button>
                     <div style={{display:'flex', justifyContent:'center', marginTop:'1vh'}}>
                         <text>已經有帳號嗎？</text>
                         <NavLink href='./Login' style={{padding:0}}>馬上登入</NavLink>
