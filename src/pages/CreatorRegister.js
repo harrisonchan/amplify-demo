@@ -92,7 +92,9 @@ class CreatorRegister extends React.Component{
                     </InputGroup>
                     <text className='header2 alignFlexStart'>電子郵件地址</text>
                     <InputGroup>
-                        <Input placeholder="請輸入電子郵件作為您的帳號" className='input1' type='email' />
+                        <Input placeholder="請輸入電子郵件作為您的帳號" className='input1' type='email' 
+                        onChange={(val) => console.log(val.target.value)}
+                        />
                         <InputGroupAddon addonType="append"></InputGroupAddon>
                     </InputGroup>
                     <text className='header2 alignFlexStart'>密碼</text>
