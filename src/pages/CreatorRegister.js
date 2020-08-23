@@ -72,8 +72,9 @@ class CreatorRegister extends React.Component{
         let dateArr = date.split('-')
         if(
             dateArr.length == 1 ||
-            Date.parse(this.state.currDate) < Date.parse(date)) {
-            this.setState({dateValid: false}, console.log("suck a dick"))
+            Date.parse(this.state.currDate) < Date.parse(date) ||
+            Date.parse(date) < Date.parse('1900-01-01')) {
+            this.setState({dateValid: false})
         } else {
             this.setState({yearInput: dateArr[0], monthInput: dateArr[1], dayInput: dateArr[2], dateValid: true})
         }
@@ -84,17 +85,17 @@ class CreatorRegister extends React.Component{
     }
 
     testStuff() {
-        let d1 = new Date(1, 8, 1)
-        let d2 = new Date().getDate()
-        let ddd = d1.getMonth()
-        console.log(d2)
+        // let d1 = new Date(1, 8, 1)
+        // let d2 = new Date().getDate()
+        // let ddd = d1.getMonth()
+        // console.log(d2)
     }
 
     render() {
         return(
             <div className='CreatorRegister'>
                 <div className='Display1'>
-                    <text className='header1'>註冊會員</text>
+                    <text className='header1 alignFlexStart'>註冊會員</text>
                     <text className='header2 alignFlexStart'>名字</text>
                     <InputGroup>
                         <Input placeholder="請輸入姓氏" className='input1'/>
@@ -159,7 +160,7 @@ class CreatorRegister extends React.Component{
                         </Dropdown>
                     </InputGroup>
                     <Button onClick={() => this.testStuff()}>註冊會員</Button>
-                    <div style={{display:'flex', justifyContent:'center', marginTop:'1vh'}}>
+                    <div style={{display:'flex', justifyContent:'center', marginTop:'1vh', alignSelf:'flex-start'}}>
                         <text>已經有帳號嗎？</text>
                         <NavLink href='./Login' style={{padding:0}}>馬上登入</NavLink>
                     </div>

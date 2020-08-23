@@ -1,6 +1,8 @@
 .header1 {
     font-size: 1.7rem;
     font-weight: bold;
+    padding-top: 10vh;
+    padding-bottom: 2vh;
 }
 
 .header2 {
