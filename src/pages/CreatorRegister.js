@@ -29,12 +29,16 @@ class CreatorRegister extends React.Component{
             pwCheckInput: '',
             pwValid: false,
             pwMatch: true,
-            dayDropdownOpen: false,
-            dayInput: '日',
-            monthDropdownOpen: false,
-            monthInput:'月',
-            yearDropdownOpen: false,
-            yearInput:'年',
+            dateValid: true,
+            yearInput: 0,
+            monthInput: 0,
+            dayInput: 0,
+            // dayDropdownOpen: false,
+            // dayInput: '日',
+            // monthDropdownOpen: false,
+            // monthInput:'月',
+            // yearDropdownOpen: false,
+            // yearInput:'年',
             genderDropdownOpen: false,
             genderInput: '選擇性別',
         }
@@ -52,12 +56,21 @@ class CreatorRegister extends React.Component{
     }
 
     matchPw() {
-        if(this.state.pwInput == this.state.pwCheckInput 
+        if(this.state.pwInput == this.state.pwCheckInput
             || this.state.pwInput == '' 
             || this.state.pwCheckInput == '') {
             this.setState({pwMatch: true})
         } else {
             this.setState({pwMatch: false})
+        }
+    }
+
+    handleDate(date) {
+        let dateArr = date.split('-')
+        if(dateArr.length == 1) {
+            this.setState({dateValid: false})
+        } else {
+            this.setState({yearInput: dateArr[0], monthInput: dateArr[1], dayInput: dateArr[2]})
         }
     }
 
@@ -79,7 +92,7 @@ class CreatorRegister extends React.Component{
                     </InputGroup>
                     <text className='header2 alignFlexStart'>電子郵件地址</text>
                     <InputGroup>
-                        <Input placeholder="請輸入電子郵件作為您的帳號" className='input1'/>
+                        <Input placeholder="請輸入電子郵件作為您的帳號" className='input1' type='email' />
                         <InputGroupAddon addonType="append"></InputGroupAddon>
                     </InputGroup>
                     <text className='header2 alignFlexStart'>密碼</text>
@@ -90,7 +103,7 @@ class CreatorRegister extends React.Component{
                         style={{color:'#FF9191'}}>
                         密碼不合</text>  }                  
                     <InputGroup>
-                        <Input placeholder="請設定登入密碼" className='input1'
+                        <Input placeholder="請設定登入密碼" className='input1' type='password'
                             onChange={(val) => {this.setState({pwInput:val.target.value}, () => {
                                 this.checkPwValid();
                                 this.matchPw();
@@ -98,43 +111,19 @@ class CreatorRegister extends React.Component{
                         <InputGroupAddon addonType="append"></InputGroupAddon>
                     </InputGroup>
                     <InputGroup>
-                        <Input placeholder="請再輸入一次密碼" className='input1'
+                        <Input placeholder="請再輸入一次密碼" className='input1' type='password'
                             onChange={(val) => {this.setState({pwCheckInput:val.target.value}, () => this.matchPw())}}/>
                         <InputGroupAddon addonType="append">
                         </InputGroupAddon>
                     </InputGroup>
                     <text className='header2 alignFlexStart'>生日</text>
+                    {!this.state.dateValid && <text className='font1 alignFlexStart' 
+                        style={{color:'#FF9191'}}>
+                        日期錯誤</text>  }   
                     <InputGroup>
-                        <Dropdown
-                            direction='down'
-                            isOpen={this.state.dayDropdownOpen} toggle={
-                                () => this.setState({dayDropdownOpen: !this.state.dayDropdownOpen})
-                            }>
-                            <DropdownToggle caret>{this.state.dayInput = '' ? 'select day' : this.state.dayInput}</DropdownToggle>
-                            <DropdownMenu style={{overflowY: 'scroll', height:'30vh'}}>
-                                {day.map((day) => <DropdownItem onClick={() => this.setState({dayInput: day})}>{day}</DropdownItem>)}
-                            </DropdownMenu>
-                        </Dropdown>
-                        <Dropdown
-                            direction='down'
-                            isOpen={this.state.monthDropdownOpen} toggle={
-                                () => this.setState({monthDropdownOpen: !this.state.monthDropdownOpen})
-                            }>
-                            <DropdownToggle caret>{this.state.monthInput = '' ? 'select month' : this.state.monthInput}</DropdownToggle>
-                            <DropdownMenu style={{overflowY: 'scroll', height:'30vh'}}>
-                                {month.map((month) => <DropdownItem onClick={() => this.setState({monthInput: month})}>{month}</DropdownItem>)}
-                            </DropdownMenu>
-                        </Dropdown>
-                        <Dropdown
-                            direction='down'
-                            isOpen={this.state.yearDropdownOpen} toggle={
-                                () => this.setState({yearDropdownOpen: !this.state.yearDropdownOpen})
-                            }>
-                            <DropdownToggle caret>{this.state.yearInput = '' ? 'select year' : this.state.yearInput}</DropdownToggle>
-                            <DropdownMenu style={{overflowY: 'scroll', height:'30vh'}}>
-                                {year.map((year) => <DropdownItem onClick={() => this.setState({yearInput: year})}>{year}</DropdownItem>)}
-                            </DropdownMenu>
-                        </Dropdown>
+                        <Input className='input1' type='date'
+                            onChange={(val) => this.handleDate(val.target.value)}/>
+                            <InputGroupAddon addonType='append'></InputGroupAddon>
                     </InputGroup>
                     <text className='header2 alignFlexStart'>性別</text>
                     <Dropdown 
@@ -160,3 +149,38 @@ class CreatorRegister extends React.Component{
 }
 
 export default CreatorRegister;
+
+
+
+{/* <InputGroup>
+<Dropdown
+    direction='down'
+    isOpen={this.state.dayDropdownOpen} toggle={
+        () => this.setState({dayDropdownOpen: !this.state.dayDropdownOpen})
+    }>
+    <DropdownToggle caret>{this.state.dayInput = '' ? 'select day' : this.state.dayInput}</DropdownToggle>
+    <DropdownMenu style={{overflowY: 'scroll', height:'30vh'}}>
+        {day.map((day) => <DropdownItem onClick={() => this.setState({dayInput: day})}>{day}</DropdownItem>)}
+    </DropdownMenu>
+</Dropdown>
+<Dropdown
+    direction='down'
+    isOpen={this.state.monthDropdownOpen} toggle={
+        () => this.setState({monthDropdownOpen: !this.state.monthDropdownOpen})
+    }>
+    <DropdownToggle caret>{this.state.monthInput = '' ? 'select month' : this.state.monthInput}</DropdownToggle>
+    <DropdownMenu style={{overflowY: 'scroll', height:'30vh'}}>
+        {month.map((month) => <DropdownItem onClick={() => this.setState({monthInput: month})}>{month}</DropdownItem>)}
+    </DropdownMenu>
+</Dropdown>
+<Dropdown
+    direction='down'
+    isOpen={this.state.yearDropdownOpen} toggle={
+        () => this.setState({yearDropdownOpen: !this.state.yearDropdownOpen})
+    }>
+    <DropdownToggle caret>{this.state.yearInput = '' ? 'select year' : this.state.yearInput}</DropdownToggle>
+    <DropdownMenu style={{overflowY: 'scroll', height:'30vh'}}>
+        {year.map((year) => <DropdownItem onClick={() => this.setState({yearInput: year})}>{year}</DropdownItem>)}
+    </DropdownMenu>
+</Dropdown>
+</InputGroup> */}
