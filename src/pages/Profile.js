@@ -3,7 +3,7 @@ import {UserContext} from '../providers/UserProvider';
 import {Button} from 'reactstrap';
 import {useHistory} from 'react-router-dom';
 import '../StyleSheet.css'
-import {auth, getUserDocument} from '../Firebase'
+//import {auth, getUserDocument} from '../Firebase'
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";

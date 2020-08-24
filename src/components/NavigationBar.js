@@ -15,7 +15,7 @@ import {
 } from 'reactstrap';
 import './NavigationBar.css';
 import {UserContext} from '../providers/UserProvider'
-import {signOut} from '../Firebase'
+//import {signOut} from '../Firebase'
 //import {Link} from 'react-router-dom';
 
 const NavigationBar = (props) => {
