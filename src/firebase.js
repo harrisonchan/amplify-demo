@@ -64,3 +64,7 @@ export const getUserDocument = async (uid) => {
         console.error("Error fetching user document", error)
     }
 }
+
+export const signOut = () => {
+    auth.signOut()
+}

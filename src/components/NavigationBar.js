@@ -15,7 +15,7 @@ import {
 } from 'reactstrap';
 import './NavigationBar.css';
 import {UserContext} from '../providers/UserProvider'
-import {auth} from '../Firebase'
+import {signOut} from '../Firebase'
 //import {Link} from 'react-router-dom';
 
 const NavigationBar = (props) => {
@@ -52,7 +52,7 @@ const NavigationBar = (props) => {
                 </NavItem>
               </div>
               <NavItem>
-                {user ? <NavLink href="/" onClick={() => {auth.signOut()}}>登出</NavLink> : <NavLink href="/Login">登入</NavLink>}
+                {user ? <NavLink href="/" onClick={() => {signOut()}}>登出</NavLink> : <NavLink href="/Login">登入</NavLink>}
               </NavItem>
             </Nav>
           </Collapse>
