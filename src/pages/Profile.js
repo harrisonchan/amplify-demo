@@ -4,9 +4,6 @@ import {Button} from 'reactstrap';
 import {useHistory} from 'react-router-dom';
 import '../StyleSheet.css'
 //import {auth, getUserDocument} from '../Firebase'
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
 
 
 const Profile = () => {
@@ -36,11 +33,6 @@ const Profile = () => {
             setGender(user.gender)
         }
     }, [user])
-
-    const getUser = () => {
-        var user = firebase.auth().currentUser;
-        console.log(user)
-    }
 
     return(
         <div style={{display:'flex', justifyContent:'center', alignContent:'center'}}>

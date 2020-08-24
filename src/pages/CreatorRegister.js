@@ -15,7 +15,7 @@ import {
 } from 'reactstrap';
 import './CreatorRegister.css';
 import '../StyleSheet.css';
-import {auth, signInWithGoogle, createUserDocument} from '../Firebase';
+import {auth, signInWithGoogle, createUserDocument} from '../firebase';
 import {useHistory} from 'react-router-dom'
 
 const CreatorRegister = () => {

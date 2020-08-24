@@ -66,5 +66,5 @@ export const getUserDocument = async (uid) => {
 }
 
 export const signOut = () => {
-    auth.signOut()
+    firebase.auth().signOut()
 }
