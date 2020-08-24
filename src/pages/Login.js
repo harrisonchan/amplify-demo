@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {InputGroup, InputGroupAddon, InputGroupText, Input, Button, NavItem, NavLink} from 'reactstrap';
 import './Login.css'
 import '../StyleSheet.css'
-import {auth, signInWithGoogle} from '../Firebase'
+import {auth, signInWithGoogle} from '../firebase'
 import {useHistory} from 'react-router-dom'
 import {UserContext} from '../providers/UserProvider'
 
