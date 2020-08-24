@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     InputGroup, 
     InputGroupAddon, 
@@ -16,31 +16,29 @@ import {
 import './CreatorRegister.css';
 import '../StyleSheet.css';
 
-class CreatorRegister extends React.Component{
+const CreatorRegister = () => {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            pwInput: '',
-            pwCheckInput: '',
-            pwValid: false,
-            pwMatch: true,
-            currDate: '',
-            dateValid: true,
-            yearInput: 0,
-            monthInput: 0,
-            dayInput: 0,
-            genderDropdownOpen: false,
-            genderInput: '',
-            validGender: false,
-        }
-    }
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [email, setEmail] = useState('')
+    const [pw, setPw] = useState('')
+    const [pwCheck, setPwCheck] = useState('')
+    const [pwValid, setPwValid] = useState(false)
+    const [pwMatch, setPwMatch] = useState(true)
+    const [currDate, setCurrDate] = useState('')
+    const [dateValid, setDateValid] = useState(true)
+    const [year, setYear] = useState(0)
+    const [month, setMonth] = useState(0)
+    const [day, setDay] = useState(0)
+    const [date, setDate] = useState(0)
+    const [gender, setGender] = useState('')
+    const [validGender, setValidGender] = useState(false)
 
-    componentDidMount() {
-        this.setState({currDate: this.parseDate()})
-    }
+    useEffect(() => {
+        setCurrDate(parseDate())
+    }, [currDate])
 
-    parseDate() {
+    const parseDate = () => {
         let date = new Date()
         let year = date.getFullYear().toString()
         let month = (date.getMonth() + 1).toString()
@@ -55,112 +53,110 @@ class CreatorRegister extends React.Component{
         return date
     }
 
-    checkPwValid() {
-        this.setState({pwValid: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/.test(this.state.pwInput)})
+    const checkPwValid = () => {
+        setPwValid(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/.test(pw))
     }
 
-    matchPw() {
-        if(this.state.pwInput == this.state.pwCheckInput
-            || this.state.pwInput == '' 
-            || this.state.pwCheckInput == '') {
-            this.setState({pwMatch: true})
+    const matchPwAndSetPwCheck = (pwCheck) => {
+        if(pw == pwCheck || pw == '' || pwCheck == '') {
+            setPwMatch(true)
+            setPwCheck(pwCheck)
         } else {
-            this.setState({pwMatch: false})
+            setPwMatch(false)
+            setPwCheck(pwCheck)
         }
     }
 
-    handleDate(date) {
+    const handleDate = (date) => {
+        setDate(date)
         let dateArr = date.split('-')
         if(
             dateArr.length == 1 ||
-            Date.parse(this.state.currDate) < Date.parse(date) ||
+            Date.parse(currDate) < Date.parse(date) ||
             Date.parse(date) < Date.parse('1930-01-01')) {
-            this.setState({dateValid: false})
+            setDateValid(false)
         } else {
-            this.setState({yearInput: dateArr[0], monthInput: dateArr[1], dayInput: dateArr[2], dateValid: true})
+            setYear(dateArr[0])
+            setMonth(dateArr[1])
+            setDay(dateArr[2])
+            setDateValid(true)
         }
     }
 
-    checkEmail(email) {
+    const checkEmail = (email) => {
 
     }
 
-    testStuff() {
-        // let d1 = new Date(1, 8, 1)
-        // let d2 = new Date().getDate()
-        // let ddd = d1.getMonth()
-        // console.log(d2)
+    const testStuff = () =>  {
+        
     }
 
-    render() {
+    const register = () => {
+        let state = this.state
+        console.log('First Name: ' + firstName + ', Last Name: ' + lastName, ', Email: ' + email + ', Password: ' + pw+ ', Date: ' + date + ', Gender: ' + gender)
+    }
+
         return(
             <div className='CreatorRegister'>
                 <div className='Display1'>
                     <text className='header1 alignFlexStart'>註冊會員</text>
                     <text className='header2 alignFlexStart'>名字</text>
                     <InputGroup>
-                        <Input placeholder="請輸入姓氏" className='input1'/>
+                        <Input placeholder="請輸入姓氏" className='input1' 
+                        onChange={(val) => setFirstName(val.target.value)}/>
                         <InputGroupAddon addonType="prepend">
                         </InputGroupAddon>
                     </InputGroup>
                     <InputGroup>
-                        <Input placeholder="請輸入名字" className='input1'/>
+                        <Input placeholder="請輸入名字" className='input1'  
+                        onChange={(val) => setLastName(val.target.value)}/>
                         <InputGroupAddon addonType="append">
                         </InputGroupAddon>
                     </InputGroup>
                     <text className='header2 alignFlexStart'>電子郵件地址</text>
                     <InputGroup>
                         <Input placeholder="請輸入電子郵件作為您的帳號" className='input1' type='email' 
-                        onChange={(val) => console.log(val.target.value)}
+                         onChange={(val) => setEmail(val.target.value)}
                         />
                         <InputGroupAddon addonType="append"></InputGroupAddon>
                     </InputGroup>
                     <text className='header2 alignFlexStart'>密碼</text>
                     <text className='font1 alignFlexStart' 
-                        style={this.state.pwValid ? {color:'#46AB55'} : {color:'#FF9191'}}>
+                        style={pwValid ? {color:'#46AB55'} : {color:'#FF9191'}}>
                         請輸入8到16位字元，英數字混合，並包含符號之密碼</text>
-                    {!this.state.pwMatch && <text className='font1 alignFlexStart' 
+                    {!pwMatch && <text className='font1 alignFlexStart' 
                         style={{color:'#FF9191'}}>
                         密碼不合</text>  }                  
                     <InputGroup>
                         <Input placeholder="請設定登入密碼" className='input1' type='password'
-                            onChange={(val) => {this.setState({pwInput:val.target.value}, () => {
-                                this.checkPwValid();
-                                this.matchPw();
-                            })}}/>
+                            onChange={(val) => {checkPwValid(); setPw(val.target.value)}}/>
                         <InputGroupAddon addonType="append"></InputGroupAddon>
                     </InputGroup>
                     <InputGroup>
                         <Input placeholder="請再輸入一次密碼" className='input1' type='password'
-                            onChange={(val) => {this.setState({pwCheckInput:val.target.value}, () => this.matchPw())}}/>
+                            onChange={(val) => matchPwAndSetPwCheck(val.target.value)}/>
                         <InputGroupAddon addonType="append">
                         </InputGroupAddon>
                     </InputGroup>
                     <text className='header2 alignFlexStart'>生日</text>
-                    {!this.state.dateValid && <text className='font1 alignFlexStart' 
+                    {!dateValid && <text className='font1 alignFlexStart' 
                         style={{color:'#FF9191'}}>
                         日期錯誤</text>  }   
                     <InputGroup>
-                        <Input className='input1' type='date' min='1930-01-01' max={this.state.currDate}
-                            onChange={(val) => this.handleDate(val.target.value)}/>
+                        <Input className='input1' type='date' min='1930-01-01' max={currDate}
+                            onChange={(val) => handleDate(val.target.value)}/>
                             <InputGroupAddon addonType='append'></InputGroupAddon>
                     </InputGroup>
                     <text className='header2 alignFlexStart'>性別</text>
                     <InputGroup>
-                        <Input className='input1' type='select' onChange={(val) => this.setState({genderInput: val.target.value}, () => {
-                            if(this.state.genderInput == '') {
-                                this.setState({validGender:false})
-                            } else {
-                                this.setState({validGender:true})
-                            }
-                        })}> 
+                        <Input className='input1' type='select' onChange={(val) => setGender(val.target.value)}> 
                                 <option value=''>選擇性別</option>
                                 <option value='男性'>男性</option>
                                 <option value='女性'>女性</option>
                                 <option value='其他'>其他</option>
                         </Input>
                     </InputGroup>
-                    <Button style={{marginTop:'4vh'}} onClick={() => this.testStuff()}>註冊會員</Button>
+                    <Button style={{marginTop:'4vh'}} onClick={() => console.log('hey')}>註冊會員</Button>
                     <div style={{display:'flex', justifyContent:'center', marginTop:'1vh', alignSelf:'flex-start'}}>
                         <text>已經有帳號嗎？</text>
                         <NavLink href='./Login' style={{padding:0}}>馬上登入</NavLink>
@@ -168,42 +164,6 @@ class CreatorRegister extends React.Component{
                 </div>
             </div>
         )
-    }
 }
 
 export default CreatorRegister;
-
-
-
-{/* <InputGroup>
-<Dropdown
-    direction='down'
-    isOpen={this.state.dayDropdownOpen} toggle={
-        () => this.setState({dayDropdownOpen: !this.state.dayDropdownOpen})
-    }>
-    <DropdownToggle caret>{this.state.dayInput = '' ? 'select day' : this.state.dayInput}</DropdownToggle>
-    <DropdownMenu style={{overflowY: 'scroll', height:'30vh'}}>
-        {day.map((day) => <DropdownItem onClick={() => this.setState({dayInput: day})}>{day}</DropdownItem>)}
-    </DropdownMenu>
-</Dropdown>
-<Dropdown
-    direction='down'
-    isOpen={this.state.monthDropdownOpen} toggle={
-        () => this.setState({monthDropdownOpen: !this.state.monthDropdownOpen})
-    }>
-    <DropdownToggle caret>{this.state.monthInput = '' ? 'select month' : this.state.monthInput}</DropdownToggle>
-    <DropdownMenu style={{overflowY: 'scroll', height:'30vh'}}>
-        {month.map((month) => <DropdownItem onClick={() => this.setState({monthInput: month})}>{month}</DropdownItem>)}
-    </DropdownMenu>
-</Dropdown>
-<Dropdown
-    direction='down'
-    isOpen={this.state.yearDropdownOpen} toggle={
-        () => this.setState({yearDropdownOpen: !this.state.yearDropdownOpen})
-    }>
-    <DropdownToggle caret>{this.state.yearInput = '' ? 'select year' : this.state.yearInput}</DropdownToggle>
-    <DropdownMenu style={{overflowY: 'scroll', height:'30vh'}}>
-        {year.map((year) => <DropdownItem onClick={() => this.setState({yearInput: year})}>{year}</DropdownItem>)}
-    </DropdownMenu>
-</Dropdown>
-</InputGroup> */}
