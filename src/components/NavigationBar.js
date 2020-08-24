@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {
     Collapse,
     Navbar,
@@ -14,12 +14,18 @@ import {
     NavbarText
 } from 'reactstrap';
 import './NavigationBar.css';
+import {UserContext} from '../providers/UserProvider'
+import {auth} from '../Firebase'
 //import {Link} from 'react-router-dom';
 
 const NavigationBar = (props) => {
     const [isOpen, setIsOpen] = useState(false);
-
     const toggle = () => setIsOpen(!isOpen);
+    const user = useContext(UserContext)
+
+    useEffect(() => {
+      console.log('mounted')
+    }, [])
   
     return (
       <div>
@@ -46,7 +52,7 @@ const NavigationBar = (props) => {
                 </NavItem>
               </div>
               <NavItem>
-                <NavLink href="/Login">登入</NavLink>
+                {user ? <NavLink href="/" onClick={() => {auth.signOut()}}>登出</NavLink> : <NavLink href="/Login">登入</NavLink>}
               </NavItem>
             </Nav>
           </Collapse>

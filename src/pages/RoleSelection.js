@@ -23,7 +23,7 @@ class RoleSelection extends React.Component{
                     <div className='Display2'>
                         <text className='header2 alignFlexStart'>投資者帳號可：</text>
                         <text className='alignFlexStart'>搜尋、追蹤、投資項目線上即時通訊跟創業者聯絡</text>
-                        <Button onClick={() => this.nextPath('./')}>我是創業者</Button>
+                        <Button onClick={() => this.nextPath('./')}>我是投資者</Button>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems:'center' }}>
                         <text>已經有帳號嗎？</text>

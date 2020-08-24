@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //import {Provider} from 'react-redux'
 //import {store} from './components/redux/store/store';
 
+
 ReactDOM.render(
       <App />,
   document.getElementById('root')
